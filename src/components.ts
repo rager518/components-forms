@@ -29,6 +29,14 @@ export default function(editor: Editor) {
     name: 'placeholder',
   };
 
+  const maxTrait = {
+    name: 'maxlength',
+  };
+
+  const dpatternTrait = {
+    name: 'pattern',
+  };
+
   const valueTrait = {
     name: 'value',
   };
@@ -42,6 +50,15 @@ export default function(editor: Editor) {
     type: 'checkbox',
     name: 'checked',
   };
+
+  const patternTrait = {
+    name: 'data-pattern',
+  };
+
+  const errorTrait = {
+    name: 'data-error',
+  };
+
 
   const createOption = (value: string, content: string) => {
     return { type: typeOption, content, attributes: { value } };
@@ -62,7 +79,9 @@ export default function(editor: Editor) {
         droppable: ':not(form)',
         draggable: ':not(form)',
         attributes: { method: 'get' },
-        traits: [{
+        traits: [
+          idTrait,
+          {
           type: 'select',
           name: 'method',
           options: [
@@ -109,9 +128,15 @@ export default function(editor: Editor) {
               { value: 'email' },
               { value: 'password' },
               { value: 'number' },
+              { value: 'hidden' },
             ]
           },
-          requiredTrait
+          valueTrait,
+          requiredTrait,
+          patternTrait,
+          dpatternTrait,
+          maxTrait,
+          errorTrait
         ],
       },
     },
@@ -266,12 +291,13 @@ export default function(editor: Editor) {
       defaults: {
         tagName: 'button',
         attributes: { type: 'button' },
-        text: 'Send',
         traits: [
           {
             name: 'text',
             changeProp: true,
-          }, {
+          }, 
+          valueTrait,
+          {
             type: 'select',
             name: 'type',
             options: [
